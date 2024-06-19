@@ -4,11 +4,7 @@
 
 void arquivo(char *n){
     FILE *fp1, *fp2;
-    unsigned char *buffer = (unsigned char *)malloc(MAX * sizeof(unsigned char));
-    if(buffer == NULL){
-        printf("Erro de alocação de memória\n");
-        exit(1);
-    }
+    unsigned char buffer[MAX];
 
     fp1 = fopen(n, "rb");
     if(fp1 == NULL){
@@ -23,7 +19,7 @@ void arquivo(char *n){
     }
 
     int tam;
-    while(tam = fread(buffer, 1, sizeof(buffer), fp1) > 0){
+    while((tam = fread(buffer, 1, sizeof(buffer), fp1)) > 0){
         fwrite(buffer, 1, tam, fp2);
     }
 
@@ -39,9 +35,8 @@ void arquivo(char *n){
     while((tam = fread(buffer, 1, sizeof(buffer), fp2)) > 0){
         fwrite(buffer, 1, tam, stdout);
     }
-    printf("/n");
+    printf("\n");
 
-    free(buffer);
     fclose(fp2);
 }
 
