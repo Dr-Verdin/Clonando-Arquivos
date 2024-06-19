@@ -17,13 +17,13 @@ void arquivo(char *n){
     }
 
     fp2 = fopen("ladygaga.bin", "wb");
-    if(fp1 == NULL){
+    if(fp2 == NULL){
         printf("Erro de leitura de arquivo\n");
         exit(1);
     }
 
     int tam;
-    while(tam = fread(buffer, 1, sizeof(buffer), fp1)){
+    while(tam = fread(buffer, 1, sizeof(buffer), fp1) > 0){
         fwrite(buffer, 1, tam, fp2);
     }
 
@@ -31,14 +31,15 @@ void arquivo(char *n){
     fclose(fp2);
 
     fp2 = fopen("ladygaga.bin", "rb");
-    if(fp1 == NULL){
+    if(fp2 == NULL){
         printf("Erro de leitura de arquivo\n");
         exit(1);
     }
 
-    while((tam = fread(buffer, 1, sizeof(buffer), fp1)) > 0){
-        fwrite(buffer, tam, 1, stdout);
+    while((tam = fread(buffer, 1, sizeof(buffer), fp2)) > 0){
+        fwrite(buffer, 1, tam, stdout);
     }
+    printf("/n");
 
     free(buffer);
     fclose(fp2);
